@@ -1,51 +1,77 @@
 #include <stdio.h>
-#define NumI 5
-#define NumJ 8
+#define SIZE 20
 int main(void) {
-	float arr[NumI][NumJ];
-	//indexx
-	for (int i = 0;i < NumI;i++) {
-		for (int j = 0;j < NumJ;j++) {
-			printf("Enter arr[%d][%d]:", i, j);
-			scanf_s("%f", &arr[i][j]);
-		}
+	float arr[SIZE], sum = 0, average;
+	int num;
+    float* ptr = arr;
+    //вказівники
+    for (;ptr < arr + SIZE;ptr++) {
+		printf("Enter number %d: ", (int)(ptr - arr + 1));
+		scanf_s("%f", ptr);
+	}//m
+	float max = arr[0];
+	num = 0;
+    //індексація
+    for (int i = 0;i < 20;i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+            num = i;
+        }
+        sum += arr[i];
+    }
+	average =sum / SIZE;
+	for(float* ptr = arr + num + 1;ptr < arr + SIZE;ptr++) {
+        *ptr += average;
 	}
-	//vkazivniki
-	for (float* ptr = &arr[0][0]; ptr < &arr[0][0] + (NumI * NumJ) - 2 * NumJ;ptr++) {
-		*ptr = *(ptr + 2 * NumJ);
-	}
-	//tez vkazivniki
-	for (float* ptr = &arr[NumI - 2][0];ptr < &arr[0][0] + NumI * NumJ;ptr++) {
-		*ptr = 0.0;
-	}
-	//unnaming
-	for (int i = 0;i < NumI;i++) {
-		for (int j = 0;j < NumJ;j++) {
-			printf("%f", *(*(arr + i) + j));
-		}
-		printf("\n");
-	}
+    //array unnamed
+	for(int i=0;i<SIZE;i++)
+        printf("	%f	", *(arr+i));
+	
 	return 0;
 }
-	/*for (int i = 0;i < NumI - 2;i++) {
-		for (int j = 0;j < NumJ;j++) {
-			arr[i][j] = arr[i + 2][j];
-		}
-	}
-	for (int i = NumI - 2; i < NumI; i++) {
-		for (int j = 0; j < NumJ; j++) {
-			arr[i][j] = 0.0;
-		}
-	}
-	for(int i=0;i<NumI;i++){
-		for(int j=0;j<NumJ;j++){
-			printf("%f ",arr[i][j]);
-		}
-		printf("\n");
-	}
 
-	
 
-	return 0;
+
+
+/*
+#include <stdio.h>
+#define SIZE 20 
+
+int main(void) {
+    float arr[SIZE], sum = 0, average;
+    int num, n;
+
+    
+    do {
+        printf("Enter number of elements (1-%d): ", SIZE);
+        scanf("%d", &n);
+    } while (n < 1 || n > SIZE);
+    for (int i = 0; i < n; i++) {
+        printf("Enter number %d: ", i + 1);
+        scanf_s("%f", &arr[i]);
+    }
+
+    float max = arr[0];
+    num = 0;
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+        if (arr[i] > max) {
+            max = arr[i];
+            num = i;
+        }
+    }
+
+    average = sum / n;
+
+    for (int i = num + 1; i < n; i++) {
+        arr[i] += average;
+    }
+    printf("\nResult:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%.2f ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
 }
 */
